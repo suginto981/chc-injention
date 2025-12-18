@@ -1,5 +1,7 @@
 import { Sidebar } from "@/components/Sidebar";
+import { MobileNav } from "@/components/MobileNav";
 import { PredictionForm } from "@/components/PredictionForm";
+import { Brain } from "lucide-react";
 
 export default function PrediksiPage() {
   const handlePredict = async (data: any) => {
@@ -69,9 +71,25 @@ export default function PrediksiPage() {
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
-      <main className="ml-64 p-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold">Prediksi Kerugian</h1>
+      
+      {/* Mobile Header */}
+      <header className="fixed top-0 left-0 right-0 z-30 bg-background/80 backdrop-blur-xl border-b border-border md:hidden safe-area-top">
+        <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <Brain className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="font-bold text-foreground">Prediksi</h1>
+              <p className="text-[10px] text-muted-foreground">Machine Learning</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main className="md:ml-64 px-4 md:px-8 pt-20 md:pt-8 pb-24 md:pb-8">
+        <div className="mb-6 md:mb-8 hidden md:block">
+          <h1 className="text-3xl font-bold gradient-text">Prediksi Kerugian</h1>
           <p className="text-muted-foreground mt-1">
             Gunakan model machine learning untuk memprediksi potensi kerugian produksi
           </p>
@@ -79,6 +97,8 @@ export default function PrediksiPage() {
 
         <PredictionForm onPredict={handlePredict} />
       </main>
+
+      <MobileNav />
     </div>
   );
 }
