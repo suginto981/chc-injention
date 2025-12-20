@@ -12,7 +12,8 @@ export default function DataPage() {
   const [data, setData] = useState<ProductionData[]>(sampleProductionData);
 
   const handleAdd = (newItem: Omit<ProductionData, "id">) => {
-    const newId = Math.max(...data.map((d) => d.id), 0) + 1;
+    const maxId = data.length > 0 ? Math.max(...data.map((d) => d.id)) : 0;
+    const newId = maxId + 1;
     setData([...data, { ...newItem, id: newId }]);
   };
 
@@ -25,7 +26,8 @@ export default function DataPage() {
   };
 
   const handleImport = (importedData: Omit<ProductionData, "id">[]) => {
-    const startId = Math.max(...data.map((d) => d.id), 0) + 1;
+    const maxId = data.length > 0 ? Math.max(...data.map((d) => d.id)) : 0;
+    const startId = maxId + 1;
     const newData = importedData.map((item, index) => ({
       ...item,
       id: startId + index,
