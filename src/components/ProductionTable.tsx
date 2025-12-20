@@ -33,10 +33,11 @@ export function ProductionTable({ data, onAdd, onEdit, onDelete }: ProductionTab
   const [editItem, setEditItem] = useState<ProductionData | null>(null);
   const [formData, setFormData] = useState<Omit<ProductionData, "id">>(emptyForm);
 
-  const filteredData = data.filter((item) =>
-    item.tanggal.includes(searchTerm) ||
-    item.bahan_baku.toString().includes(searchTerm)
-  );
+  const filteredData = data.filter((item) => {
+    const tanggalStr = String(item.tanggal || "");
+    return tanggalStr.includes(searchTerm) ||
+      item.bahan_baku.toString().includes(searchTerm);
+  });
 
   const handleSubmit = () => {
     if (editItem) {

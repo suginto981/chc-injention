@@ -56,17 +56,31 @@ export function ExcelHandler({ data, onImport }: ExcelHandlerProps) {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        const importedData: Omit<ProductionData, "id">[] = jsonData.map((row: any) => ({
-          tanggal: row.Tanggal || row.tanggal || new Date().toISOString().split("T")[0],
-          bahan_baku: Number(row["Bahan Baku (kg)"] || row.bahan_baku) || 0,
-          jam_mesin: Number(row["Jam Mesin (jam)"] || row.jam_mesin) || 0,
-          suhu: Number(row["Suhu (°C)"] || row.suhu) || 0,
-          tekanan: Number(row["Tekanan (bar)"] || row.tekanan) || 0,
-          cycle_time: Number(row["Cycle Time (dtk)"] || row.cycle_time) || 0,
-          defect: Number(row.Defect || row.defect) || 0,
-          downtime: Number(row["Downtime (jam)"] || row.downtime) || 0,
-          kerugian: (Number(row["Kerugian (0/1)"] || row.kerugian) || 0) as 0 | 1,
-        }));
+        const importedData: Omit<ProductionData, "id">[] = jsonData.map((row: any) => {
+          // Handle Excel date serial number or date string
+          let tanggal = row.Tanggal || row.tanggal || new Date().toISOString().split("T")[0];
+          if (typeof tanggal === "number") {
+            // Excel serial date conversion
+            const excelDate = new Date((tanggal - 25569) * 86400 * 1000);
+            tanggal = excelDate.toISOString().split("T")[0];
+          } else if (tanggal instanceof Date) {
+            tanggal = tanggal.toISOString().split("T")[0];
+          } else {
+            tanggal = String(tanggal);
+          }
+          
+          return {
+            tanggal,
+            bahan_baku: Number(row["Bahan Baku (kg)"] || row.bahan_baku) || 0,
+            jam_mesin: Number(row["Jam Mesin (jam)"] || row.jam_mesin) || 0,
+            suhu: Number(row["Suhu (°C)"] || row.suhu) || 0,
+            tekanan: Number(row["Tekanan (bar)"] || row.tekanan) || 0,
+            cycle_time: Number(row["Cycle Time (dtk)"] || row.cycle_time) || 0,
+            defect: Number(row.Defect || row.defect) || 0,
+            downtime: Number(row["Downtime (jam)"] || row.downtime) || 0,
+            kerugian: (Number(row["Kerugian (0/1)"] || row.kerugian) || 0) as 0 | 1,
+          };
+        });
 
         onImport(importedData);
         toast.success(`${importedData.length} data berhasil diimpor`);
