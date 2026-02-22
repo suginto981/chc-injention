@@ -1,32 +1,37 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import DataPage from "./pages/DataPage";
-import PrediksiPage from "./pages/PrediksiPage";
-import AnalisisPage from "./pages/AnalisisPage";
-import NotFound from "./pages/NotFound";
+import React from "react";
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/data" element={<DataPage />} />
-          <Route path="/prediksi" element={<PrediksiPage />} />
-          <Route path="/analisis" element={<AnalisisPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
-
-export default App;
+export default function App() {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="border-b">
+        <div className="mx-auto max-w-6xl px-6 py-4">
+          <h1 className="text-xl font-semibold">CHC Injection 1600 Ton - Monitor</h1>
+        </div>
+      </header>
+      <main className="mx-auto max-w-6xl px-6 py-8">
+        <section className="rounded-lg border bg-card text-card-foreground shadow-sm">
+          <div className="p-6">
+            <h2 className="text-lg font-medium">Selamat datang</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              UI masih minimal. Kita bisa aktifkan autentikasi atau menambah dashboard.
+            </p>
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="rounded-md border bg-background p-4">
+                <div className="text-sm font-medium">Status Produksi</div>
+                <div className="mt-2 text-2xl font-semibold">-</div>
+              </div>
+              <div className="rounded-md border bg-background p-4">
+                <div className="text-sm font-medium">Kerugian Terprediksi</div>
+                <div className="mt-2 text-2xl font-semibold">-</div>
+              </div>
+              <div className="rounded-md border bg-background p-4">
+                <div className="text-sm font-medium">Utilisasi Mesin</div>
+                <div className="mt-2 text-2xl font-semibold">-</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
