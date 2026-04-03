@@ -6,10 +6,10 @@ export default function Sidebar() {
     <aside className="w-64 shrink-0 border-r bg-card text-card-foreground">
       <div className="px-4 py-6">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-primary/10 grid place-items-center text-primary">📊</div>
+          <div className="h-12 w-12 rounded-lg bg-primary/10 grid place-items-center text-primary text-xl shadow-sm">📊</div>
           <div>
-            <div className="text-sm font-semibold">CHC Injection</div>
-            <div className="text-xs text-muted-foreground">1600 Ton Monitor</div>
+            <div className="text-lg font-bold tracking-tight text-primary leading-tight">CHC Injection</div>
+            <div className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground opacity-80">1600 Ton Monitor</div>
           </div>
         </div>
       </div>
