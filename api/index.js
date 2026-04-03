@@ -482,6 +482,10 @@ app.get('/api/predictions/analysis', async (_req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`API server listening on http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log(`API server listening on http://localhost:${port}`);
+  });
+}
+
+export default app;
